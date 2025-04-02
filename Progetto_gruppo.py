@@ -20,17 +20,7 @@ def registrazione_nome():
     
 
 
-registrazione_nome()
 
-#print(utenti_registrati)
-
-#per effettuare un numero di registrazioni 
-# contatore=0
-# while contatore<5:
-#     registrazione_nome() 
-    
-# Lista di dizionari con utenti e password
-#utenti_registrati = [{'name': 'Liliana', 'password': 'ciao'}]
 
 # Funzione per il login
 def login():
@@ -39,29 +29,38 @@ def login():
     password=input("inserisci password:")
     for utente in utenti_registrati:
         # Controlla se nome e password corrispondono
-        if name and password in utenti_registrati:
+        if utente['name'] == name and utente['password'] == password:
             print("1. Prenotare posti")
             print("2. Creare concerti")
             scelta=int(input("Scegli tra le due opzioni (1/2):"))
+            match scelta:
+                case 1:
+                    prenota_posto()
+                case 2:
+                    aggiungi_concerto()
+                case _:
+                    print("Scelta non valida")
+            
             return True  # Login riuscito
     print("error password o nome utente")
     return False  # Login fallito
 
-login()
+#login()
 
-#funzione per la prenotazione concerti   
+#funzione per la creazione concerti   
 
 def aggiungi_concerto():
-    nome_concerto=input("inserisci nome concerto")
+    nome_concerto=input("inserisci nome concerto:")
     password=input("inserisci password")
     if password != password_giusta:
         print("Password segreta errata.")
         return
     if len(concerti_registrati) >= max_concerti:
-        print("Numero massimo di concerti raggiunto")
+        print("Numero massimo di concerti raggiunto:")
         return
     concerti_registrati.append({'nome': nome_concerto})
     print(f"Concerto '{nome_concerto}' aggiunto.")
+    
    
    
 #funzione per la prenotazione dei posti e la scelta del concerto  
@@ -87,17 +86,21 @@ def prenota_posto():
 
 registrazione_nome()
 login()
-if login()==True:
+#continuare con le operazioni 
+while True: #questo serve a ripetere il ciclo e a ricominciare
+    print("Vuoi continuare?")
     print("1. Prenotare posti")
     print("2. Creare concerti")
-    scelta=input("inserisci una scelta (1/2):")
-    match scelta:
-                    case 1:
-                        prenota_posto()
-                    case 2:
-                        aggiungi_concerto()
-                    case _:
-                        print("Scelta non valida")
+    scelta=int(input("scegliere tra le opzioni: "))
+    if scelta==1:
+        prenota_posto()
+    else:
+        aggiungi_concerto()
+    continua=input("Vuoi continuare?(s/n)")
+    if continua.lower()=="no":
+        break
+    
+    
 
 
 
