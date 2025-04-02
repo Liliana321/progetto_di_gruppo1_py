@@ -22,7 +22,7 @@ def registrazione_nome():
 
 registrazione_nome()
 
-print(utenti_registrati)
+#print(utenti_registrati)
 
 #per effettuare un numero di registrazioni 
 # contatore=0
@@ -30,34 +30,74 @@ print(utenti_registrati)
 #     registrazione_nome() 
     
 # Lista di dizionari con utenti e password
-utenti_registrati = [{'name': 'Liliana', 'password': 'ciao'}]
+#utenti_registrati = [{'name': 'Liliana', 'password': 'ciao'}]
 
 # Funzione per il login
-def login(name, password):
+def login():
+    print("Effettuare il login")
+    name=input("inserisci nome:")
+    password=input("inserisci password:")
     for utente in utenti_registrati:
         # Controlla se nome e password corrispondono
-        if utente['name'] == name and utente['password'] == password:
+        if name and password in utenti_registrati:
             print("1. Prenotare posti")
             print("2. Creare concerti")
             scelta=int(input("Scegli tra le due opzioni (1/2):"))
-            match scelta:
-                case 1:
-                    print("prenotazione effettuata")
-                case 2:
-                    password=input("inserisci password")
-                    if password==password_giusta:
-                        print("concerto creato")
-                    else:
-                        print("Password sbagliata. Riprovare")
-                case _:
-                    print("Scelta non valida")
-    
             return True  # Login riuscito
     print("error password o nome utente")
     return False  # Login fallito
 
-# Esempio di login
-login("Liliana", "ciao")
+login()
+
+#funzione per la prenotazione concerti   
+
+def aggiungi_concerto():
+    nome_concerto=input("inserisci nome concerto")
+    password=input("inserisci password")
+    if password != password_giusta:
+        print("Password segreta errata.")
+        return
+    if len(concerti_registrati) >= max_concerti:
+        print("Numero massimo di concerti raggiunto")
+        return
+    concerti_registrati.append({'nome': nome_concerto})
+    print(f"Concerto '{nome_concerto}' aggiunto.")
+   
+   
+#funzione per la prenotazione dei posti e la scelta del concerto  
+def prenota_posto():
+    if not concerti_registrati:
+        print("Nessun concerto disponibile.")
+        return
+    print(concerti_registrati)
+    print("Concerti disponibili:")
+    
+    scelta = int(input("Seleziona il numero del concerto: "))
+    match scelta:
+        case 1:
+            print(f"Prenotazione effettuata per: {concerti_registrati[0]['nome']}")
+        case 2:
+            print(f"Prenotazione effettuata per: {concerti_registrati[1]['nome']}")
+        case 3:
+            print(f"Prenotazione effettuata per: {concerti_registrati[2]['nome']}")
+
+#aggiungi_concerto()
+
+#esempio 
+
+registrazione_nome()
+login()
+if login()==True:
+    print("1. Prenotare posti")
+    print("2. Creare concerti")
+    scelta=input("inserisci una scelta (1/2):")
+    match scelta:
+                    case 1:
+                        prenota_posto()
+                    case 2:
+                        aggiungi_concerto()
+                    case _:
+                        print("Scelta non valida")
 
 
 
